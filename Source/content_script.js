@@ -1,13 +1,12 @@
-function walk(rootNode)
-{
+function walk(rootNode) {
     // Find all the text nodes in rootNode
     var walker = document.createTreeWalker(
         rootNode,
         NodeFilter.SHOW_TEXT,
         null,
         false
-    ),
-    node;
+        ),
+        node;
 
     // Modify each text node's value
     while (node = walker.nextNode()) {
@@ -16,11 +15,10 @@ function walk(rootNode)
 }
 
 function handleText(textNode) {
-  textNode.nodeValue = replaceText(textNode.nodeValue);
+    textNode.nodeValue = replaceText(textNode.nodeValue);
 }
 
-function replaceText(v)
-{
+function replaceText(v) {
     // Fix some misspellings
     v = v.replace(/\b(M|m)illienial(s)?\b/g, "$1illennial$2");
     v = v.replace(/\b(M|m)illenial(s)?\b/g, "$1illennial$2");
@@ -130,8 +128,12 @@ function replaceText(v)
 
     // Tweens
     // The replacement syntax here emulates a negative lookbehind to avoid replacing `'tween`
-    v = v.replace( /(')?\bTween(s)?\b/g, function ($0, $1, $2) { return ($1 ? $0 : $2 ? "Neonates" : "Neonate") });
-    v = v.replace( /(')?\btween(s)?\b/g, function ($0, $1, $2) { return ($1 ? $0 : $2 ? "neonates" : "neonate") });
+    v = v.replace(/(')?\bTween(s)?\b/g, function ($0, $1, $2) {
+        return ($1 ? $0 : $2 ? "Neonates" : "Neonate")
+    });
+    v = v.replace(/(')?\btween(s)?\b/g, function ($0, $1, $2) {
+        return ($1 ? $0 : $2 ? "neonates" : "neonate")
+    });
 
     // Generation Y
     v = v.replace(/\b(?:Generation Y)|(?:Generation Why)\b/g,
@@ -247,16 +249,16 @@ function replaceText(v)
 // Returns true if a node should *not* be altered in any way
 function isForbiddenNode(node) {
     return node.isContentEditable || // DraftJS and many others
-    (node.parentNode && node.parentNode.isContentEditable) || // Special case for Gmail
-    (node.tagName && (node.tagName.toLowerCase() == "textarea" || // Some catch-alls
-                     node.tagName.toLowerCase() == "input"));
+        (node.parentNode && node.parentNode.isContentEditable) || // Special case for Gmail
+        (node.tagName && (node.tagName.toLowerCase() == "textarea" || // Some catch-alls
+            node.tagName.toLowerCase() == "input"));
 }
 
 // The callback used for the document body and title observers
 function observerCallback(mutations) {
     var i, node;
 
-    mutations.forEach(function(mutation) {
+    mutations.forEach(function (mutation) {
         for (i = 0; i < mutation.addedNodes.length; i++) {
             node = mutation.addedNodes[i];
             if (isForbiddenNode(node)) {
@@ -276,12 +278,12 @@ function observerCallback(mutations) {
 // Walk the doc (document) body, replace the title, and observe the body and title
 function walkAndObserve(doc) {
     var docTitle = doc.getElementsByTagName('title')[0],
-    observerConfig = {
-        characterData: true,
-        childList: true,
-        subtree: true
-    },
-    bodyObserver, titleObserver;
+        observerConfig = {
+            characterData: true,
+            childList: true,
+            subtree: true
+        },
+        bodyObserver, titleObserver;
 
     // Do the initial text replacements in the document body and title
     walk(doc.body);
@@ -297,4 +299,5 @@ function walkAndObserve(doc) {
         titleObserver.observe(docTitle, observerConfig);
     }
 }
+
 walkAndObserve(document);
