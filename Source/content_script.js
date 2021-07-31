@@ -1,13 +1,12 @@
 function walk(rootNode) {
     // Find all the text nodes in rootNode
-    var walker = document.createTreeWalker(
+    const walker = document.createTreeWalker(
         rootNode,
         NodeFilter.SHOW_TEXT,
         null,
         false
-        ),
-        node;
-
+    );
+    let node;
     // Modify each text node's value
     while (node = walker.nextNode()) {
         handleText(node);
@@ -277,25 +276,24 @@ function observerCallback(mutations) {
 
 // Walk the doc (document) body, replace the title, and observe the body and title
 function walkAndObserve(doc) {
-    var docTitle = doc.getElementsByTagName('title')[0],
-        observerConfig = {
-            characterData: true,
-            childList: true,
-            subtree: true
-        },
-        bodyObserver, titleObserver;
+    const docTitle = doc.getElementsByTagName('title')[0];
+    const observerConfig = {
+        characterData: true,
+        childList: true,
+        subtree: true
+    };
 
     // Do the initial text replacements in the document body and title
     walk(doc.body);
     doc.title = replaceText(doc.title);
 
     // Observe the body so that we replace text in any added/modified nodes
-    bodyObserver = new MutationObserver(observerCallback);
+    const bodyObserver = new MutationObserver(observerCallback);
     bodyObserver.observe(doc.body, observerConfig);
 
     // Observe the title so we can handle any modifications there
     if (docTitle) {
-        titleObserver = new MutationObserver(observerCallback);
+        const titleObserver = new MutationObserver(observerCallback);
         titleObserver.observe(docTitle, observerConfig);
     }
 }
