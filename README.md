@@ -6,9 +6,8 @@ Browser extension that replaces german gendered Words.
 ## Installation
 
 1. Add the extension to your browser of choice: 
-  - [Chrome](https://chrome.google.com/webstore/detail/TODO)
-  - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/TODO/)
-  - [Safari](https://github.com/a2/TODO/releases)
+  - [Chrome](https://chrome.google.com/webstore/detail/degenderfy)
+  - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/degenderfy/)
 
 
 ## Also
