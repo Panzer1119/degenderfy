@@ -249,8 +249,8 @@ function replaceText(v) {
 function isForbiddenNode(node) {
     return node.isContentEditable || // DraftJS and many others
         (node.parentNode && node.parentNode.isContentEditable) || // Special case for Gmail
-        (node.tagName && (node.tagName.toLowerCase() == "textarea" || // Some catch-alls
-            node.tagName.toLowerCase() == "input"));
+        (node.tagName && (node.tagName.toLowerCase() === "textarea" || // Some catch-alls
+            node.tagName.toLowerCase() === "input"));
 }
 
 // The callback used for the document body and title observers
@@ -262,7 +262,6 @@ function observerCallback(mutations) {
             node = mutation.addedNodes[i];
             if (isForbiddenNode(node)) {
                 // Should never operate on user-editable content
-                continue;
             } else if (node.nodeType === 3) {
                 // Replace the text for text nodes
                 handleText(node);
