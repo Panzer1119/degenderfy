@@ -48,7 +48,7 @@ function isForbiddenNode(node) {
 
 // The callback used for the document body and title observers
 function observerCallback(mutations) {
-    var i, node;
+    let i, node;
 
     mutations.forEach(function (mutation) {
         for (i = 0; i < mutation.addedNodes.length; i++) {
